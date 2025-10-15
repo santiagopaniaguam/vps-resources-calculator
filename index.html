@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS Resource Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>VPS-CALC v1.0.0</h1>
+            <p class="subtitle">./vps-simulator --mode=interactive</p>
+        </header>
+
+        <div class="calculator-wrapper">
+            <div class="input-section">
+                <h2>Configuration</h2>
+
+                <div class="input-group">
+                    <label for="numUsers">Number of Concurrent Users</label>
+                    <select id="numUsers">
+                        <option value="10">10 users</option>
+                        <option value="50">50 users</option>
+                        <option value="100" selected>100 users</option>
+                        <option value="250">250 users</option>
+                        <option value="500">500 users</option>
+                        <option value="1000">1,000 users</option>
+                        <option value="2500">2,500 users</option>
+                        <option value="5000">5,000 users</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input type="number" id="customUsers" class="custom-input hidden" placeholder="Enter custom value" min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="appType">Application Type</label>
+                    <select id="appType">
+                        <option value="light">Light (Static/Simple API)</option>
+                        <option value="medium" selected>Medium (Standard Web App)</option>
+                        <option value="heavy">Heavy (Data Processing)</option>
+                        <option value="veryHeavy">Very Heavy (Real-time/ML)</option>
+                    </select>
+                    <small class="helper-text">Determines RAM consumption per user</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="ramPerUser">RAM per User (MB)</label>
+                    <select id="ramPerUser">
+                        <option value="5">5 MB</option>
+                        <option value="10">10 MB</option>
+                        <option value="25" selected>25 MB</option>
+                        <option value="50">50 MB</option>
+                        <option value="100">100 MB</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input type="number" id="customRam" class="custom-input hidden" placeholder="Enter custom MB" min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="cpuCores">Available CPU Cores</label>
+                    <select id="cpuCores">
+                        <option value="1">1 Core</option>
+                        <option value="2" selected>2 Cores</option>
+                        <option value="4">4 Cores</option>
+                        <option value="8">8 Cores</option>
+                        <option value="16">16 Cores</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input type="number" id="customCpu" class="custom-input hidden" placeholder="Enter custom value" min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="totalRam">Total RAM (GB)</label>
+                    <select id="totalRam">
+                        <option value="1">1 GB</option>
+                        <option value="2">2 GB</option>
+                        <option value="4" selected>4 GB</option>
+                        <option value="8">8 GB</option>
+                        <option value="16">16 GB</option>
+                        <option value="32">32 GB</option>
+                        <option value="64">64 GB</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input type="number" id="customTotalRam" class="custom-input hidden" placeholder="Enter custom GB" min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="totalStorage">Total Storage (GB)</label>
+                    <select id="totalStorage">
+                        <option value="20">20 GB</option>
+                        <option value="40">40 GB</option>
+                        <option value="80" selected>80 GB</option>
+                        <option value="160">160 GB</option>
+                        <option value="320">320 GB</option>
+                        <option value="500">500 GB</option>
+                        <option value="1000">1 TB</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input type="number" id="customStorage" class="custom-input hidden" placeholder="Enter custom GB" min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="storagePerUser">Storage per User (MB)</label>
+                    <select id="storagePerUser">
+                        <option value="1">1 MB</option>
+                        <option value="5">5 MB</option>
+                        <option value="10" selected>10 MB</option>
+                        <option value="50">50 MB</option>
+                        <option value="100">100 MB</option>
+                        <option value="500">500 MB</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input type="number" id="customStoragePerUser" class="custom-input hidden" placeholder="Enter custom MB" min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="baseStorage">Base Storage Usage (GB)</label>
+                    <select id="baseStorage">
+                        <option value="5">5 GB (OS + App)</option>
+                        <option value="10" selected>10 GB (OS + App + Dependencies)</option>
+                        <option value="15">15 GB (Full Stack)</option>
+                        <option value="20">20 GB (Multiple Apps)</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input type="number" id="customBaseStorage" class="custom-input hidden" placeholder="Enter custom GB" min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="cpuIntensity">CPU Intensity per Request</label>
+                    <select id="cpuIntensity">
+                        <option value="low">Low (Static content)</option>
+                        <option value="medium" selected>Medium (Dynamic pages)</option>
+                        <option value="high">High (API processing)</option>
+                        <option value="veryHigh">Very High (Computation)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="baseRam">Base RAM Usage (MB)</label>
+                    <select id="baseRam">
+                        <option value="256">256 MB (Minimal)</option>
+                        <option value="512" selected>512 MB (Standard)</option>
+                        <option value="1024">1024 MB (Full stack)</option>
+                        <option value="2048">2048 MB (Heavy services)</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input type="number" id="customBaseRam" class="custom-input hidden" placeholder="Enter custom MB" min="1">
+                    <small class="helper-text">OS and application baseline</small>
+                </div>
+
+                <button id="calculateBtn" class="btn-primary">Calculate Resources</button>
+            </div>
+
+            <div class="results-section">
+                <h2>Resource Usage Results</h2>
+
+                <div class="result-card">
+                    <h3>RAM Usage</h3>
+                    <div class="metric">
+                        <span class="label">Used:</span>
+                        <span id="ramUsed" class="value">0 MB</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Available:</span>
+                        <span id="ramTotal" class="value">0 MB</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="ramProgress" class="progress-fill"></div>
+                    </div>
+                    <div class="percentage" id="ramPercentage">0%</div>
+                    <div id="ramStatus" class="status-message"></div>
+                </div>
+
+                <div class="result-card">
+                    <h3>CPU Usage</h3>
+                    <div class="metric">
+                        <span class="label">Estimated Load:</span>
+                        <span id="cpuLoad" class="value">0%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Cores:</span>
+                        <span id="cpuCoresDisplay" class="value">0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="cpuProgress" class="progress-fill"></div>
+                    </div>
+                    <div class="percentage" id="cpuPercentage">0%</div>
+                    <div id="cpuStatus" class="status-message"></div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Storage Usage</h3>
+                    <div class="metric">
+                        <span class="label">Used:</span>
+                        <span id="storageUsed" class="value">0 GB</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Available:</span>
+                        <span id="storageTotal" class="value">0 GB</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="storageProgress" class="progress-fill"></div>
+                    </div>
+                    <div class="percentage" id="storagePercentage">0%</div>
+                    <div id="storageStatus" class="status-message"></div>
+                </div>
+
+                <div class="recommendations" id="recommendations">
+                    <h3>Recommendations</h3>
+                    <ul id="recommendationsList"></ul>
+                </div>
+
+                <div class="summary" id="summary">
+                    <h3>System Status</h3>
+                    <div id="overallStatus" class="overall-status"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
