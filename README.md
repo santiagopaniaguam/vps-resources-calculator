@@ -2,6 +2,8 @@
 
 A comprehensive web-based calculator for simulating resource consumption of applications deployed on a VPS (Virtual Private Server).
 
+!UI Picture VPS Resource Calc.PNG
+
 ## Features
 
 ### Input Parameters
